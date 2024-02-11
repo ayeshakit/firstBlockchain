@@ -1,0 +1,40 @@
+  OrdererOrgs:
+    - Name: orderer
+      Domain: orderer.tracemine.com
+      EnableNodeOUs: true
+      Specs:
+        - Hostname : orderer1
+          SANS:
+            - "localhost"
+            - "127.0.0.1"
+        - Hostname : orderer2
+          SANS:
+            - "localhost"
+            - "127.0.0.1"
+        - Hostname : orderer3
+          SANS:
+            - "localhost"
+            - "127.0.0.1"
+  PeerOrgs:
+    - Name: Deminer 
+      Domain: Deminer.tracemine.com
+      EnableNodeOUs: true
+      Template:
+        Count: 2
+      Users:
+        Count: 1 
+    - Name: Soldier 
+      Domain: Soldier.tracemine.com
+      EnableNodeOUs: true
+      Template:
+        Count: 2
+      Users:
+        Count: 1 
+    - Name: Captain 
+      Domain: Captain.tracemine.com
+      EnableNodeOUs: true
+      Template:
+        Count: 2
+      Users:
+        Count: 1 
+        

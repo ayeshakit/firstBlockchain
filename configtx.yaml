@@ -1,0 +1,229 @@
+---
+Organizations:
+    - &orderer
+        Name: orderer
+        ID: ordererMSP
+        MSPDir: /home/s17/firstBlockchain/crypto-config/ordererOrganizations/orderer.tracemine.com/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('ordererMSP.member')"
+            Writers:
+                Type: Signature
+                Rule: "OR('ordererMSP.member')"
+            Admins:
+                Type: Signature
+                Rule: "OR('ordererMSP.admin')"
+    - &Captain
+        Name: CaptainMSP
+        ID: CaptainMSP
+        MSPDir: /home/s17/firstBlockchain/crypto-config/peerOrganizations/Captain.tracemine.com/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('CaptainMSP.admin', 'CaptainMSP.peer', 'CaptainMSP.client')"
+            Writers:
+                Type: Signature
+                Rule: "OR('CaptainMSP.admin', 'CaptainMSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('CaptainMSP.admin')"      
+            Endorsement:
+                Type: Signature
+                Rule: "OR('CaptainMSP.peer')"        
+        AnchorPeers: 
+            - Host: peer0.Captain.tracemine.com
+              Port: 7051 
+    - &Deminer
+        Name: DeminerMSP
+        ID: DeminerMSP
+        MSPDir: /home/s17/firstBlockchain/crypto-config/peerOrganizations/Deminer.tracemine.com/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('DeminerMSP.admin', 'DeminerMSP.peer', 'DeminerMSP.client')"
+            Writers:
+                Type: Signature
+                Rule: "OR('DeminerMSP.admin', 'DeminerMSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('DeminerMSP.admin')"      
+            Endorsement:
+                Type: Signature
+                Rule: "OR('DeminerMSP.peer')"        
+        AnchorPeers: 
+            - Host: peer0.Deminer.tracemine.com
+              Port: 9051 
+    - &Soldier
+        Name: SoldierMSP
+        ID: SoldierMSP
+        MSPDir: /home/s17/firstBlockchain/crypto-config/peerOrganizations/Soldier.tracemine.com/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('SoldierMSP.admin', 'SoldierMSP.peer', 'SoldierMSP.client')"
+            Writers:
+                Type: Signature
+                Rule: "OR('SoldierMSP.admin', 'SoldierMSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('SoldierMSP.admin')"      
+            Endorsement:
+                Type: Signature
+                Rule: "OR('SoldierMSP.peer')"        
+        AnchorPeers: 
+            - Host: peer0.Soldier.tracemine.com
+              Port: 11051 
+
+Capabilities:
+    Channel: &ChannelCapabilities
+        V2_0: true
+    Orderer: &OrdererCapabilities
+        V2_0: true
+    Application: &ApplicationCapabilities
+        V2_0: true
+
+Application: &ApplicationDefaults
+    Organizations:
+    Policies:
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+        LifecycleEndorsement:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Endorsement"
+        Endorsement:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Endorsement"
+
+    Capabilities:
+        <<: *ApplicationCapabilities
+
+Orderer: &OrdererDefaults
+    OrdererType: etcdraft
+    Addresses:
+        - orderer1.orderer.tracemine.com:7050
+        - orderer2.orderer.tracemine.com:7050
+        - orderer3.orderer.tracemine.com:7050
+
+    BatchTimeout: 2s
+    BatchSize:
+        MaxMessageCount: 10
+        AbsoluteMaxBytes: 98 MB
+        PreferredMaxBytes: 512 KB
+    EtcdRaft:
+        Consenters:
+            - Host: orderer1.orderer.tracemine.com
+              Port: 7050
+              ClientTLSCert: /home/s17/firstBlockchain/crypto-config/ordererOrganizations/orderer.tracemine.com/orderers/orderer1.orderer.tracemine.com/tls/server.crt
+              ServerTLSCert: /home/s17/firstBlockchain/crypto-config/ordererOrganizations/orderer.tracemine.com/orderers/orderer1.orderer.tracemine.com/tls/server.crt 
+            - Host: orderer2.orderer.tracemine.com
+              Port: 7050
+              ClientTLSCert: /home/s17/firstBlockchain/crypto-config/ordererOrganizations/orderer.tracemine.com/orderers/orderer2.orderer.tracemine.com/tls/server.crt
+              ServerTLSCert: /home/s17/firstBlockchain/crypto-config/ordererOrganizations/orderer.tracemine.com/orderers/orderer2.orderer.tracemine.com/tls/server.crt 
+            - Host: orderer3.orderer.tracemine.com
+              Port: 7050
+              ClientTLSCert: /home/s17/firstBlockchain/crypto-config/ordererOrganizations/orderer.tracemine.com/orderers/orderer3.orderer.tracemine.com/tls/server.crt
+              ServerTLSCert: /home/s17/firstBlockchain/crypto-config/ordererOrganizations/orderer.tracemine.com/orderers/orderer3.orderer.tracemine.com/tls/server.crt 
+    Organizations:
+    Policies:
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+        BlockValidation:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+
+Channel: &ChannelDefaults
+    Policies:
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+    Capabilities:
+        <<: *ChannelCapabilities
+
+Profiles:
+    RaftOrderer:
+        <<: *ChannelDefaults
+        Capabilities:
+            <<: *ChannelCapabilities
+        Orderer:
+            <<: *OrdererDefaults
+            Organizations:
+            - *orderer 
+            Capabilities:
+                <<: *OrdererCapabilities
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+            - <<: *orderer
+        Consortiums:
+            Consortiumtraceminechannel:
+                Organizations:
+                   - *Captain
+                   - *Deminer
+                   - *Soldier
+            Consortiumtraceminechannel2:
+                Organizations:
+                   - *Captain
+                   - *Deminer
+            Consortiumtraceminechannel3:
+                Organizations:
+                   - *Captain
+                   - *Soldier
+                   
+    traceminechannel:
+        Consortium: Consortiumtraceminechannel
+        <<: *ChannelDefaults
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *Captain
+                - *Deminer
+                - *Soldier
+
+            Capabilities:
+                <<: *ApplicationCapabilities
+        
+    traceminechannel2:
+        Consortium: Consortiumtraceminechannel2
+        <<: *ChannelDefaults
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *Captain
+                - *Deminer
+                
+
+            Capabilities:
+                <<: *ApplicationCapabilities
+    traceminechannel3:
+        Consortium: Consortiumtraceminechannel3
+        <<: *ChannelDefaults
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *Captain
+                - *Soldier
+                
+
+            Capabilities:
+                <<: *ApplicationCapabilities
