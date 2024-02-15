@@ -1,15 +1,15 @@
      
 version: '2' 
 volumes:
-  orderer1.orderer.example.com:
-  orderer2.orderer.example.com:
-  orderer3.orderer.example.com:
+  orderer1.orderer.tracemine.com:
+  orderer2.orderer.tracemine.com:
+  orderer3.orderer.tracemine.com:
 
 networks:
-  examplev1:
+  traceminev1:
 services:
-  orderer1.orderer.example.com:
-    container_name: orderer1.orderer.example.com
+  orderer1.orderer.tracemine.com:
+    container_name: orderer1.orderer.tracemine.com
     image: hyperledger/fabric-orderer
     environment:
       - FABRIC_LOGGING_SPEC=INFO
@@ -33,13 +33,13 @@ services:
       - 7050:7050
     volumes:
       - ./channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
-      - ./crypto-config/ordererOrganizations/orderer.example.com/orderers/orderer1.orderer.example.com/msp:/var/hyperledger/orderer/msp
-      - ./crypto-config/ordererOrganizations/orderer.example.com/orderers/orderer1.orderer.example.com/tls/:/var/hyperledger/orderer/tls
-      - orderer1.orderer.example.com:/var/hyperledger/production/orderer
+      - ./crypto-config/orderer.tracemine.com/orderers/orderer1.orderer.tracemine.com/msp:/var/hyperledger/orderer/msp
+      - ./crypto-config/orderer.tracemine.com/orderers/orderer1.orderer.tracemine.com/tls/:/var/hyperledger/orderer/tls
+      - orderer1.orderer.tracemine.com:/var/hyperledger/production/orderer
     networks:
-      - examplev1
-  orderer2.orderer.example.com:
-    container_name: orderer2.orderer.example.com
+      - traceminev1
+  orderer2.orderer.tracemine.com:
+    container_name: orderer2.orderer.tracemine.com
     image: hyperledger/fabric-orderer
     environment:
       - FABRIC_LOGGING_SPEC=INFO
@@ -63,13 +63,13 @@ services:
       - 8050:7050
     volumes:
       - ./channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
-      - ./crypto-config/ordererOrganizations/orderer.example.com/orderers/orderer2.orderer.example.com/msp:/var/hyperledger/orderer/msp
-      - ./crypto-config/ordererOrganizations/orderer.example.com/orderers/orderer2.orderer.example.com/tls/:/var/hyperledger/orderer/tls
-      - orderer2.orderer.example.com:/var/hyperledger/production/orderer
+      - ./crypto-config/orderer.tracemine.com/orderers/orderer2.orderer.tracemine.com/msp:/var/hyperledger/orderer/msp
+      - ./crypto-config/orderer.tracemine.com/orderers/orderer2.orderer.tracemine.com/tls/:/var/hyperledger/orderer/tls
+      - orderer2.orderer.tracemine.com:/var/hyperledger/production/orderer
     networks:
-      - examplev1
-  orderer3.orderer.example.com:
-    container_name: orderer3.orderer.example.com
+      - traceminev1
+  orderer3.orderer.tracemine.com:
+    container_name: orderer3.orderer.tracemine.com
     image: hyperledger/fabric-orderer
     environment:
       - FABRIC_LOGGING_SPEC=INFO
@@ -93,8 +93,8 @@ services:
       - 9050:7050
     volumes:
       - ./channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
-      - ./crypto-config/ordererOrganizations/orderer.example.com/orderers/orderer3.orderer.example.com/msp:/var/hyperledger/orderer/msp
-      - ./crypto-config/ordererOrganizations/orderer.example.com/orderers/orderer3.orderer.example.com/tls/:/var/hyperledger/orderer/tls
-      - orderer3.orderer.example.com:/var/hyperledger/production/orderer
+      - ./crypto-config/orderer.tracemine.com/orderers/orderer3.orderer.tracemine.com/msp:/var/hyperledger/orderer/msp
+      - ./crypto-config/orderer.tracemine.com/orderers/orderer3.orderer.tracemine.com/tls/:/var/hyperledger/orderer/tls
+      - orderer3.orderer.tracemine.com:/var/hyperledger/production/orderer
     networks:
-      - examplev1
+      - traceminev1
