@@ -57,8 +57,8 @@ services:
       - 7051:7051
     volumes:
       - /var/run/:/host/var/run/
-      - .crypto-config/Captain.tracemine.com/peers/peer1.Captain.tracemine.com/msp:/etc/hyperledger/fabric/msp
-      - .crypto-config/Captain.tracemine.com/peers/peer1.Captain.tracemine.com/tls:/etc/hyperledger/fabric/tls
+      - ./crypto-config/Captain.tracemine.com/peers/peer0.Captain.tracemine.com/msp:/etc/hyperledger/fabric/msp
+      - ./crypto-config/Captain.tracemine.com/peers/peer0.Captain.tracemine.com/tls:/etc/hyperledger/fabric/tls
       - peer0.Captain.tracemine.com:/var/hyperledger/production
     networks:
       - traceminev1
@@ -107,7 +107,7 @@ services:
     volumes:
       - /var/run/:/host/var/run/
       - ./crypto-config/Captain.tracemine.com/peers/peer1.Captain.tracemine.com/msp:/etc/hyperledger/fabric/msp
-      - ./ crypto-config/Captain.tracemine.com/peers/peer1.Captain.tracemine.com/tls:/etc/hyperledger/fabric/tls
+      - ./crypto-config/Captain.tracemine.com/peers/peer1.Captain.tracemine.com/tls:/etc/hyperledger/fabric/tls
       - peer1.Captain.tracemine.com:/var/hyperledger/production
     networks:
       - traceminev1
@@ -145,7 +145,7 @@ services:
     volumes:
       - /var/run/:/host/var/run/
       - ./chaincode/:/opt/gopath/src/github.com/chaincode
-      - ../crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+      - ./crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
       - ./cli-scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
       - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel
       - ./orderer-tls:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/orderer/tls
